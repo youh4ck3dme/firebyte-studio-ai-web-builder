@@ -1,0 +1,48 @@
+# Page snapshot
+
+```yaml
+- text: Firebyte Studio Navigation
+- list:
+  - listitem:
+    - link "Dashboard":
+      - /url: /
+  - listitem:
+    - link "Projects":
+      - /url: /projects
+  - listitem:
+    - link "AI Chat":
+      - /url: /ai-chat
+  - listitem:
+    - link "Import from Figma":
+      - /url: /figma-import
+  - listitem:
+    - link "API Keys":
+      - /url: /api-keys
+  - listitem:
+    - link "Settings":
+      - /url: /settings
+- text: © 2024 Firebyte Studio
+- main:
+  - searchbox "Search projects... (Cmd+K)"
+  - heading "Dashboard" [level=1]
+  - button "New Project"
+  - heading "Quick Actions" [level=2]
+  - text: New AI Project Create a new AI-powered web application
+  - button "Get Started"
+  - text: Import from Figma Import designs and generate React components
+  - button "Get Started"
+  - text: Generate API Module Create REST/GraphQL endpoints with AI
+  - button "Get Started"
+  - text: E-commerce AI Generate product descriptions and images
+  - button "Get Started"
+  - text: AI Chat Chat with AI models and orchestrate responses
+  - button "Get Started"
+  - heading "Recent Projects" [level=2]
+  - text: Project 1 AI-powered SaaS dashboard Active 2 days ago
+  - button "View Details"
+  - text: Project 2 AI-powered SaaS dashboard Active 2 days ago
+  - button "View Details"
+  - text: Project 3 AI-powered SaaS dashboard Active 2 days ago
+  - button "View Details"
+- alert
+```
