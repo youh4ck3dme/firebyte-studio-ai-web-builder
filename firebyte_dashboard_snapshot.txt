@@ -1,0 +1,287 @@
+=== Firebyte Studio Dashboard Snapshot (Sat Aug  9 22:17:53 UTC 2025) ===
+
+--- 🧰 Environment ---
+v20.12.1
+10.5.0
+"name": "firebyte-studio",
+"version": "1.0.0",
+
+--- 📦 package.json scripts ---
+{
+  "dev": "PORT=8000 next dev --turbopack",
+  "build": "next build",
+  "start": "next start",
+  "lint": "next lint",
+  "export": "next build && next export",
+  "deploy:vercel": "vercel --prod",
+  "deploy:firebase": "npm run build && npm run export && firebase deploy",
+  "firebase:init": "firebase init",
+  "firebase:login": "firebase login",
+  "typecheck": "tsc -p . --noEmit",
+  "prepush": "npm run lint -- --max-warnings=0 && npm run typecheck && npm test -w"
+}
+
+--- 📂 src/ structure (depth<=3) ---
+src/app/ai-chat/page.tsx
+src/app/api-module/page.tsx
+src/app/ecommerce-ai-super/page.tsx
+src/app/ecommerce-ai/page.tsx
+src/app/figma-import/page.tsx
+src/app/layout.tsx
+src/app/login/page.tsx
+src/app/page.tsx
+src/app/projects/page.tsx
+src/components/FigmaImport.tsx
+src/components/ProtectedRoute.tsx
+src/components/header.tsx
+src/components/sidebar-nav.tsx
+src/components/ui/accordion.tsx
+src/components/ui/alert-dialog.tsx
+src/components/ui/alert.tsx
+src/components/ui/aspect-ratio.tsx
+src/components/ui/avatar.tsx
+src/components/ui/badge.tsx
+src/components/ui/breadcrumb.tsx
+src/components/ui/button.tsx
+src/components/ui/calendar.tsx
+src/components/ui/card.tsx
+src/components/ui/carousel.tsx
+src/components/ui/chart.tsx
+src/components/ui/checkbox.tsx
+src/components/ui/collapsible.tsx
+src/components/ui/command.tsx
+src/components/ui/context-menu.tsx
+src/components/ui/dialog.tsx
+src/components/ui/drawer.tsx
+src/components/ui/dropdown-menu.tsx
+src/components/ui/form.tsx
+src/components/ui/hover-card.tsx
+src/components/ui/input-otp.tsx
+src/components/ui/input.tsx
+src/components/ui/label.tsx
+src/components/ui/menubar.tsx
+src/components/ui/navigation-menu.tsx
+src/components/ui/pagination.tsx
+src/components/ui/popover.tsx
+src/components/ui/progress.tsx
+src/components/ui/radio-group.tsx
+src/components/ui/resizable.tsx
+src/components/ui/scroll-area.tsx
+src/components/ui/select.tsx
+src/components/ui/separator.tsx
+src/components/ui/sheet.tsx
+src/components/ui/sidebar.tsx
+src/components/ui/skeleton.tsx
+src/components/ui/slider.tsx
+src/components/ui/sonner.tsx
+src/components/ui/switch.tsx
+src/components/ui/table.tsx
+src/components/ui/tabs.tsx
+src/components/ui/textarea.tsx
+src/components/ui/toggle-group.tsx
+src/components/ui/toggle.tsx
+src/components/ui/tooltip.tsx
+src/components/wizard/NewAIProjectWizard.tsx
+src/components/wizard/Step1Template.tsx
+src/components/wizard/Step2Modules.tsx
+src/components/wizard/Step3Deploy.tsx
+src/components/wizard/WizardContext.tsx
+src/hooks/use-mobile.ts
+src/lib/ai.ts
+src/lib/auth-context.tsx
+src/lib/auth.tsx
+src/lib/firebase.ts
+src/lib/firestore.ts
+src/lib/projectService.ts
+src/lib/utils.ts
+
+--- 🗺️ src/app routes ---
+src/app/ai-chat/page.tsx
+src/app/api-module/page.tsx
+src/app/api/ai-chat/route.ts
+src/app/api/ai/route.ts
+src/app/api/api-module/route.ts
+src/app/api/ecommerce-ai-superset/route.ts
+src/app/api/ecommerce-ai/route.ts
+src/app/api/figma-import/route.ts
+src/app/api/projects/[id]/route.ts
+src/app/api/projects/new/route.ts
+src/app/api/projects/route.ts
+src/app/ecommerce-ai-super/page.tsx
+src/app/ecommerce-ai/page.tsx
+src/app/figma-import/page.tsx
+src/app/login/page.tsx
+src/app/page.tsx
+src/app/projects/[id]/page.tsx
+src/app/projects/page.tsx
+
+--- ✨ src/app/layout.tsx (first 60 lines) ---
+import type { Metadata } from "next";
+import { Inter, Poppins } from "next/font/google";
+import "./globals.css";
+import { SidebarProvider } from "@/components/ui/sidebar";
+import { AppSidebar } from "@/components/sidebar-nav";
+import { Header } from "@/components/header";
+import { AuthProvider } from "@/lib/auth-context";
+
+const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+const poppins = Poppins({ 
+  weight: ["400", "500", "600", "700"],
+  subsets: ["latin"], 
+  variable: "--font-poppins" 
+});
+
+export const metadata: Metadata = {
+  title: "Firebyte Studio - AI-Powered Web & SaaS Builder",
+  description: "Build web applications and SaaS products faster with AI assistance",
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html lang="en" className={`${inter.variable} ${poppins.variable}`}>
+      <body className="font-inter antialiased">
+        <AuthProvider>
+          <SidebarProvider>
+            <AppSidebar />
+            <main className="flex-1">
+              <Header />
+              <div className="flex flex-col h-screen">
+                <div className="flex-1 overflow-auto">
+                  {children}
+                </div>
+              </div>
+            </main>
+          </SidebarProvider>
+        </AuthProvider>
+      </body>
+    </html>
+  );
+}
+
+--- ✨ src/app/page.tsx (first 60 lines) ---
+"use client";
+
+import * as React from "react";
+import { Plus, Import, Zap, ShoppingCart, MessageSquare } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { WizardProvider } from "@/components/wizard/WizardContext";
+import NewAIProjectWizard from "@/components/wizard/NewAIProjectWizard";
+
+export default function DashboardPage() {
+  const [showWizard, setShowWizard] = React.useState(false);
+
+  const quickActions = [
+    {
+      title: "New AI Project",
+      description: "Create a new AI-powered web application",
+      icon: Plus,
+      color: "bg-blue-500",
+      action: () => setShowWizard(true),
+    },
+    {
+      title: "Import from Figma",
+      description: "Import designs and generate React components",
+      icon: Import,
+      color: "bg-purple-500",
+      action: () => window.location.href = "/figma-import",
+    },
+    {
+      title: "Generate API Module",
+      description: "Create REST/GraphQL endpoints with AI",
+      icon: Zap,
+      color: "bg-green-500",
+      action: () => window.location.href = "/api-module",
+    },
+    {
+      title: "E-commerce AI",
+      description: "Generate product descriptions and images",
+      icon: ShoppingCart,
+      color: "bg-orange-500",
+      action: () => window.location.href = "/ecommerce-ai",
+    },
+    {
+      title: "AI Chat",
+      description: "Chat with AI models and orchestrate responses",
+      icon: MessageSquare,
+      color: "bg-indigo-500",
+      action: () => window.location.href = "/ai-chat",
+    },
+  ];
+
+  return (
+    <WizardProvider>
+      <div className="flex-1 space-y-4 p-4 md:p-6">
+        <div className="flex items-center justify-between">
+          <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
+          <Button onClick={() => setShowWizard(true)}>
+            <Plus className="mr-2 h-4 w-4" />
+            New Project
+          </Button>
+
+--- ✨ src/components/header.tsx (first 60 lines) ---
+"use client";
+
+import * as React from "react";
+import { Search, Bell, User, LogIn } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Input } from "@/components/ui/input";
+import { useSidebar } from "@/components/ui/sidebar";
+import { useAuth } from "@/lib/auth-context";
+
+export function Header() {
+  const { toggleSidebar } = useSidebar();
+  const { user, loading, signInWithGoogle, signInWithGitHub, signOut } = useAuth();
+
+  if (loading) {
+    return (
+      <header className="flex h-16 items-center gap-4 border-b bg-white px-4 md:px-6">
+        <div className="flex-1">
+          <div className="relative max-w-md">
+            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500" />
+            <Input
+              type="search"
+              placeholder="Search projects... (Cmd+K)"
+              className="pl-8"
+            />
+          </div>
+        </div>
+        <div className="h-8 w-8 bg-gray-200 rounded-full animate-pulse" />
+      </header>
+    );
+  }
+
+  return (
+    <header className="flex h-16 items-center gap-4 border-b bg-white px-4 md:px-6">
+      <div className="flex-1">
+        <div className="relative max-w-md">
+          <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500" />
+          <Input
+            type="search"
+            placeholder="Search projects... (Cmd+K)"
+            className="pl-8"
+          />
+        </div>
+      </div>
+      
+      {user && (
+        <Button variant="ghost" size="icon" className="relative">
+          <Bell className="h-4 w-4" />
+          <span className="absolute -top-1 -right-1 h-4 w-4 bg-[#FF5C5C] rounded-full text-xs text-white flex items-center justify-center">
+            3
+          </span>
+        </Button>
+      )}
