@@ -1,0 +1,56 @@
+# Page snapshot
+
+```yaml
+- 'heading "Application error: a client-side exception has occurred while loading localhost (see the browser console for more information)." [level=2]'
+- button "Open Next.js Dev Tools":
+  - img
+- button "Open issues overlay": 1 Issue
+- button "Collapse issues badge":
+  - img
+- navigation:
+  - button "previous" [disabled]:
+    - img "previous"
+  - text: 1/1
+  - button "next" [disabled]:
+    - img "next"
+- img
+- link "Next.js 15.3.2 (stale) Turbopack":
+  - /url: https://nextjs.org/docs/messages/version-staleness
+  - img
+  - text: Next.js 15.3.2 (stale) Turbopack
+- img
+- dialog "Runtime Error":
+  - text: Runtime Error
+  - button "Copy Stack Trace":
+    - img
+  - button "No related documentation found" [disabled]:
+    - img
+  - link "Learn more about enabling Node.js inspector for server code with Chrome DevTools":
+    - /url: https://nextjs.org/docs/app/building-your-application/configuring/debugging#server-side-code
+    - img
+  - paragraph: "Error: useAuth must be used within AuthProvider"
+  - paragraph:
+    - img
+    - text: src/lib/auth.tsx (73:19) @ useAuth
+    - button "Open in editor":
+      - img
+  - text: "71 | export function useAuth(): AuthContextValue { 72 | const ctx = useContext(AuthContext); > 73 | if (!ctx) throw new Error(\"useAuth must be used within AuthProvider\"); | ^ 74 | return ctx; 75 | } 76 |"
+  - paragraph: Call Stack 3
+  - text: useAuth
+  - button:
+    - img
+  - text: src/lib/auth.tsx (73:19) FigmaImport
+  - button:
+    - img
+  - text: src/components/FigmaImport.tsx (33:26) FigmaImportPage
+  - button:
+    - img
+  - text: src/app/figma-import/page.tsx (4:10)
+- contentinfo:
+  - region "Error feedback":
+    - paragraph:
+      - link "Was this helpful?":
+        - /url: https://nextjs.org/telemetry#error-feedback
+    - button "Mark as helpful"
+    - button "Mark as not helpful"
+```
