@@ -1,0 +1,49 @@
+# Page snapshot
+
+```yaml
+- text: Firebyte Studio Navigation
+- list:
+  - listitem:
+    - link "Dashboard":
+      - /url: /
+  - listitem:
+    - link "Projects":
+      - /url: /projects
+  - listitem:
+    - link "AI Chat":
+      - /url: /ai-chat
+  - listitem:
+    - link "Import from Figma":
+      - /url: /figma-import
+  - listitem:
+    - link "API Keys":
+      - /url: /api-keys
+  - listitem:
+    - link "Settings":
+      - /url: /settings
+- text: © 2024 Firebyte Studio
+- main:
+  - searchbox "Search projects... (Cmd+K)"
+  - button "Sign In"
+  - heading "AI Chat with Orchestrator" [level=1]
+  - paragraph: Chat with multiple AI models and use the orchestrator to get the best responses
+  - text: "AI Chat Interface 🤖 Single model: GPT-4o Mini"
+  - paragraph: Start a conversation with AI
+  - paragraph: Select models and enable orchestrator for best results
+  - textbox "Ask me anything... (Press Enter to send, Shift+Enter for new line)": Hello AI
+  - button
+  - text: AI Models Select models to query
+  - checkbox "GPT-4o Mini OpenRouter" [checked]
+  - text: GPT-4o Mini OpenRouter
+  - checkbox "Llama 3.1 Ollama"
+  - text: Llama 3.1 Ollama
+  - checkbox "DeepSeek Coder V2 DeepSeek"
+  - text: DeepSeek Coder V2 DeepSeek Orchestrator AI response optimization
+  - checkbox "Enable orchestrator mode" [checked]
+  - text: Enable orchestrator mode
+  - paragraph: When enabled with multiple models, all models are queried in parallel and the best response is selected based on quality scoring.
+  - text: "Status Selected Models: 1 Messages: 0 Mode: 🎯 Orchestrator"
+- alert
+- button "Open Next.js Dev Tools":
+  - img
+```
